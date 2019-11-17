@@ -42,6 +42,24 @@ class Repository:
         self.grades_file_path = os.path.join(root_dir,"grades.txt")
         self.majors_file_path = os.path.join(root_dir,"majors.txt")
 
+        self.handle_majors_file()
+        self.handle_student_instructors_file()
+        self.handle_grades_file()
+
+
+
+    def show(self):
+        print('Majors Summary')
+        print(self.show_majors_file())
+
+        print('Student Summary')
+        print(self.show_student_summary())
+
+        print('Instructor Summary')
+        print(self.show_instructor_summary())
+
+
+
     def handle_majors_file(self):
         
         self.major_dict={}
@@ -114,7 +132,7 @@ class Repository:
                         if course in all_r_course_set:
                             all_r_course_set.remove(course)
                         if course in all_e_course_set:
-                            all_e_course_set.remove(course)
+                            all_e_course_set=set()
                         complete_course.append(course)
                 # list 3 kinds of list
 
@@ -130,7 +148,9 @@ class Repository:
             else:
                 print("unknown major %s"%stu.dept)
 
-        return str(tb)+'\n'
+
+        ret = str(tb)+'\n'
+        return ret
 
     def show_instructor_summary(self):
 
@@ -145,7 +165,8 @@ class Repository:
         for record in record_list:
             tb.add_row(record)
 
-        return str(tb)+'\n'
+        ret = str(tb)+'\n'
+        return ret
 
     def handle_grades_file(self):
         try:
@@ -188,19 +209,8 @@ def main():
     ''' a main() routine to run the whole thing '''
 
     rep = Repository()
+    rep.show()
 
-    rep.handle_majors_file()
-    rep.handle_student_instructors_file()
-    rep.handle_grades_file()
-
-    print('Majors Summary')
-    print(rep.show_majors_file())
-
-    print('Student Summary')
-    print(rep.show_student_summary())
-
-    print('Instructor Summary')
-    print(rep.show_instructor_summary())
 
 if __name__=="__main__":
     main()
